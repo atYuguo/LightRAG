@@ -29,6 +29,25 @@ services:
       - lightrag_db_network
     restart: always
 
+  neo4j:
+    image: graphstack/dozerdb:latest
+    environment:
+      NEO4J_AUTH: ${NEO4J_USERNAME}/${NEO4J_PASSWORD}
+      NEO4J_apoc_export_file_enabled: true
+      NEO4J_apoc_import_file_enabled: true
+      NEO4J_apoc_import_file_use__neo4j__config: true
+      NEO4J_PLUGINS: '["apoc"]'
+    volumes:
+      - ./volumes/neo4j/data:/data
+      - ./volumes/neo4j/plugins:/plugins
+      - ./volumes/neo4j/logs:/logs
+    # ports:
+    #   - "127.0.0.1:7474:7474"  # HTTP
+    #   - "127.0.0.1:7687:7687"  # Bolt
+    networks:
+      - lightrag_db_network
+    restart: always
+
   redis:
     image: redis:alpine
     volumes:
