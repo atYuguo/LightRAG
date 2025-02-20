@@ -16,13 +16,13 @@ services:
       - TZ=UTC
     restart: unless-stopped
     networks:
-      - lightrag_${NAMESPACE_PREFIX}_net
+      - lightrag_net
       - lightrag_db_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 networks:
-  lightrag_${NAMESPACE_PREFIX}_net:
+  lightrag_net:
     driver: bridge
   lightrag_db_network:
     name: lightrag_db_network
