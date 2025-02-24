@@ -17,13 +17,13 @@ services:
     restart: unless-stopped
     networks:
       - lightrag_net
-      - lightrag_db_network
+      - lightrag_pgdb_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 networks:
   lightrag_net:
     driver: bridge
-  lightrag_db_network:
-    name: lightrag_db_network
+  lightrag_pgdb_network:
+    name: lightrag_pgdb_network
     external: true
