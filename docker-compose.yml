@@ -1,13 +1,29 @@
+version: '3.8'
+name: ${NAMESPACE_PREFIX}
+
 services:
   lightrag:
     build: .
     ports:
-      - "${PORT:-9621}:9621"
+      - "127.0.0.1:9621:9621"
     volumes:
       - ./data/rag_storage:/app/data/rag_storage
       - ./data/inputs:/app/data/inputs
-      - ./config.ini:/app/config.ini
-      - ./.env:/app/.env
+      - .env:/app/.env
     env_file:
       - .env
+    environment:
+      - TZ=UTC
     restart: unless-stopped
+    networks:
+      - lightrag_net
+      - lightrag_db_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  lightrag_net:
+    driver: bridge
+  lightrag_db_network:
+    name: lightrag_db_network
+    external: true
